@@ -1,7 +1,7 @@
 import {WIDGET_DISPLAY} from 'app/views/organizationDashboard/constants';
 import {
-  getChartData,
   getChartDataByDay,
+  getChartDataForWidget,
 } from 'app/views/organizationDiscover/result/utils';
 import {isTimeSeries} from 'app/views/organizationDashboard/utils/isTimeSeries';
 
@@ -23,7 +23,7 @@ export function getChartDataFunc({queries, type, fieldLabelMap}) {
   }
 
   return [
-    getChartData,
+    getChartDataForWidget,
     [
       {
         hideFieldName: true,
