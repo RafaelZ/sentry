@@ -9,6 +9,7 @@ import {getChartComponent} from 'app/views/organizationDashboard/utils/getChartC
 import {getData} from 'app/views/organizationDashboard/utils/getData';
 import {getQueryStringFromQuery} from 'app/views/organizationDiscover/utils';
 import Button from 'app/components/button';
+import InlineSvg from 'app/components/inlineSvg';
 import SentryTypes from 'app/sentryTypes';
 import withGlobalSelection from 'app/utils/withGlobalSelection';
 import withOrganization from 'app/utils/withOrganization';
@@ -87,7 +88,7 @@ class Widget extends React.Component {
     // Need design followups
     return (
       <Button size="xsmall" onClick={this.handleExportToDiscover}>
-        DISCOVER
+        <InlineSvg src="icon-discover" />
       </Button>
     );
   }
