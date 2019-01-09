@@ -14,8 +14,6 @@ export function getChartDataFunc({queries, type, fieldLabelMap}) {
       getChartDataByDay,
       [
         {
-          useTimestamps: true,
-          assumeEmptyAsZero: true,
           fieldLabelMap,
         },
       ],
@@ -26,7 +24,6 @@ export function getChartDataFunc({queries, type, fieldLabelMap}) {
     getChartDataForWidget,
     [
       {
-        hideFieldName: true,
         includePercentages: type === WIDGET_DISPLAY.TABLE,
       },
     ],
