@@ -19,6 +19,8 @@ const GroupDetails = createReactClass({
   displayName: 'GroupDetails',
 
   propTypes: {
+    // provided in the project version of group details
+    project: SentryTypes.Project,
     environment: SentryTypes.Environment,
   },
 
@@ -169,6 +171,7 @@ const GroupDetails = createReactClass({
   render() {
     let group = this.state.group;
     let params = this.props.params;
+    let project = this.props.project;
 
     if (this.state.error) {
       switch (this.state.errorType) {
@@ -189,6 +192,7 @@ const GroupDetails = createReactClass({
           <GroupHeader orgId={params.orgId} projectId={group.project.id} group={group} />
           {React.cloneElement(this.props.children, {
             group,
+            project,
           })}
         </div>
       </DocumentTitle>
