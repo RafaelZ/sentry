@@ -10,6 +10,7 @@ import {getData} from 'app/views/organizationDashboard/utils/getData';
 import {getQueryStringFromQuery} from 'app/views/organizationDiscover/utils';
 import Button from 'app/components/button';
 import SentryTypes from 'app/sentryTypes';
+import withGlobalSelection from 'app/utils/withGlobalSelection';
 import withOrganization from 'app/utils/withOrganization';
 
 import DiscoverQuery from './discoveryQuery';
@@ -25,8 +26,14 @@ class Widget extends React.Component {
   handleExportToDiscover = event => {
     const {organization, widget, router} = this.props;
     const [firstQuery] = widget.queries.discover;
+    const {
+      datetime,
+      environments, // eslint-disable-line no-unused-vars
+      ...selection
+    } = this.props.selection;
 
     event.stopPropagation();
+
     // Discover does not support importing these
     const {
       groupby, // eslint-disable-line no-unused-vars
@@ -36,14 +43,23 @@ class Widget extends React.Component {
     } = firstQuery;
 
     const orderbyTimeIndex = orderby.indexOf('time');
+    let visual = 'table';
+
     if (orderbyTimeIndex !== -1) {
       query.orderby = `${orderbyTimeIndex === 0 ? '' : '-'}${query.aggregations[0][2]}`;
+      visual = 'line-by-day';
     } else {
       query.orderby = orderby;
     }
 
     router.push(
-      `/organizations/${organization.slug}/discover/${getQueryStringFromQuery(query)}`
+      `/organizations/${organization.slug}/discover/${getQueryStringFromQuery({
+        ...query,
+        ...selection,
+        start: datetime.start,
+        end: datetime.end,
+        range: datetime.period,
+      })}&visual=${visual}`
     );
   };
 
@@ -112,7 +128,7 @@ class Widget extends React.Component {
     );
   }
 }
-export default withRouter(withOrganization(Widget));
+export default withRouter(withOrganization(withGlobalSelection(Widget)));
 export {Widget};
 
 // XXX Heights between panel headers with `hasButtons` are not equal :(
