@@ -19,8 +19,7 @@ class OrganizationUserFeedbackTest(AcceptanceTestCase):
             name='Bengal',
         )
         self.login_as(self.user)
-        self.path = u'/organizations/{}/user-feedback/'.format(
-            self.org.slug)
+        self.path = u'/organizations/{}/user-feedback/'.format(self.org.slug)
         self.project.update(first_event=timezone.now())
 
     def test(self):
@@ -31,7 +30,7 @@ class OrganizationUserFeedbackTest(AcceptanceTestCase):
             )
             self.create_userreport(group=self.group, project=self.project, event=self.event)
             self.browser.get(self.path)
-            self.browser.wait_until_not('.loading')
+            self.browser.wait_until_not('.loading-indicator')
             self.browser.snapshot('organization user feedback')
 
     def test_empty(self):
@@ -42,5 +41,5 @@ class OrganizationUserFeedbackTest(AcceptanceTestCase):
 
     def test_no_access(self):
         self.browser.get(self.path)
-        self.browser.wait_until_not('.loading')
+        # self.browser.wait_until_not('.loading')
         self.browser.snapshot('organization user feedback - no access')
